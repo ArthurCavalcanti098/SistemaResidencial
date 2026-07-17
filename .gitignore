@@ -1,0 +1,18 @@
+# .NET
+backend/ControleGastos.Api/bin/
+backend/ControleGastos.Api/obj/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.vs/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
