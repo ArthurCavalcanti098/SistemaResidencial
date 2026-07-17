@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ControleGastos.Api</name>
+    </assembly>
+    <members>
+        <member name="T:ControleGastos.Api.Controllers.PessoasController">
+            <summary>
+            Controller para gerenciamento de pessoas.
+            </summary>
+        </member>
+        <member name="M:ControleGastos.Api.Controllers.PessoasController.Listar">
+            <summary>
+            Lista todas as pessoas cadastradas, ordenadas por nome.
+            </summary>
+        </member>
+        <member name="M:ControleGastos.Api.Controllers.PessoasController.Criar(ControleGastos.Api.DTOs.CriarPessoaDto)">
+            <summary>
+            Cria uma nova pessoa. O Id é gerado automaticamente pelo servidor .
+            </summary>
+        </member>
+        <member name="M:ControleGastos.Api.Controllers.PessoasController.Excluir(System.Guid)">
+            <summary>
+            Exclui uma pessoa e todas as suas transações ( via ON DELETE CASCADE).
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Controllers.TotaisController">
+            <summary>
+            Controller para consulta de totais consolidados.
+            </summary>
+        </member>
+        <member name="M:ControleGastos.Api.Controllers.TotaisController.Consultar">
+            <summary>
+            Retorna totais por pessoa e gerais.
+             Saldo = TotalReceitas - TotalDespesas.
+             Pessoas sem transações aparecem com zeros.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Controllers.TransacoesController">
+            <summary>
+            Controller para gerenciamento de transações financeiras.
+            </summary>
+        </member>
+        <member name="M:ControleGastos.Api.Controllers.TransacoesController.Listar">
+            <summary>
+            Lista todas as transações, ordenadas por descrição, incluindo nome da pessoa.
+            </summary>
+        </member>
+        <member name="M:ControleGastos.Api.Controllers.TransacoesController.Criar(ControleGastos.Api.DTOs.CriarTransacaoDto)">
+            <summary>
+            Cria uma nova transação.
+             Pessoa deve existir.
+             Menor de 18 anos só pode registrar despesas.
+             Valor deve ser maior que zero.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Data.AppDbContext">
+            <summary>
+            Contexto do Entity Framework Core para o banco controle_gastos.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Data.Configurations.PessoaConfiguration">
+            <summary>
+            Configuração da entidade Pessoa para o EF Core.
+            Tabela: pessoas, schema: public.
+            Constraints: PK UUID, Nome NOT NULL e CHECK length > 0, Idade CHECK 0-150.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Data.Configurations.TransacaoConfiguration">
+            <summary>
+            Configuração da entidade Transacao para o EF Core.
+            Tabela: transacoes, schema: public.
+            Constraints: PK UUID, Valor > 0 CHECK, FK PessoaId ON DELETE CASCADE, índice em PessoaId.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.DTOs.CriarPessoaDto">
+            <summary>DTO para criação de pessoa. Id não é enviado pelo cliente.</summary>
+        </member>
+        <member name="T:ControleGastos.Api.DTOs.PessoaResponseDto">
+            <summary>DTO de resposta para pessoa criada/listada.</summary>
+        </member>
+        <member name="T:ControleGastos.Api.DTOs.TotalPorPessoaDto">
+            <summary>DTO de total por pessoa (receitas, despesas, saldo).</summary>
+        </member>
+        <member name="T:ControleGastos.Api.DTOs.TotaisGeraisDto">
+            <summary>DTO de totais gerais consolidados.</summary>
+        </member>
+        <member name="T:ControleGastos.Api.DTOs.TotaisResponseDto">
+            <summary>DTO de resposta do endpoint GET /api/totais.</summary>
+        </member>
+        <member name="T:ControleGastos.Api.DTOs.CriarTransacaoDto">
+            <summary>DTO para criação de transação. Id não é enviado pelo cliente.</summary>
+        </member>
+        <member name="T:ControleGastos.Api.DTOs.TransacaoResponseDto">
+            <summary>DTO de resposta para transação criada/listada. Inclui nome da pessoa.</summary>
+        </member>
+        <member name="T:ControleGastos.Api.Exceptions.BusinessException">
+            <summary>
+            Exceção para violações de regra de negócio. Mapeada para HTTP 400.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Exceptions.ExceptionMiddleware">
+            <summary>
+            Middleware que intercepta exceções de domínio e as mapeia para respostas HTTP padronizadas.
+            BusinessException → 400, NotFoundException → 404, demais → 500.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Exceptions.NotFoundException">
+            <summary>
+            Exceção para recurso não encontrado. Mapeada para HTTP 404.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:ControleGastos.Api.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ControleGastos.Api.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ControleGastos.Api.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ControleGastos.Api.Models.Pessoa">
+            <summary>
+            Representa uma pessoa cadastrada na residência.
+            </summary>
+        </member>
+        <member name="P:ControleGastos.Api.Models.Pessoa.Id">
+            <summary>Identificador único gerado automaticamente (UUID).</summary>
+        </member>
+        <member name="P:ControleGastos.Api.Models.Pessoa.Nome">
+            <summary>Nome da pessoa. Obrigatório, máximo 100 caracteres.</summary>
+        </member>
+        <member name="P:ControleGastos.Api.Models.Pessoa.Idade">
+            <summary>Idade em anos completos. Deve estar entre 0 e 150.</summary>
+        </member>
+        <member name="P:ControleGastos.Api.Models.Pessoa.Transacoes">
+            <summary>Transações vinculadas a esta pessoa.</summary>
+        </member>
+        <member name="T:ControleGastos.Api.Models.TipoTransacao">
+            <summary>
+            Classifica uma transação financeira como entrada (receita) ou saída (despesa).
+            </summary>
+        </member>
+        <member name="F:ControleGastos.Api.Models.TipoTransacao.Despesa">
+            <summary>Saída de valor</summary>
+        </member>
+        <member name="F:ControleGastos.Api.Models.TipoTransacao.Receita">
+            <summary>Entrada de valor</summary>
+        </member>
+        <member name="T:ControleGastos.Api.Models.Transacao">
+            <summary>
+            Representa uma transação financeira vinculada a uma pessoa.
+            </summary>
+        </member>
+        <member name="P:ControleGastos.Api.Models.Transacao.Id">
+            <summary>Identificador único gerado automaticamente (UUID).</summary>
+        </member>
+        <member name="P:ControleGastos.Api.Models.Transacao.Descricao">
+            <summary>Descrição da transação. Obrigatória, máximo 200 caracteres.</summary>
+        </member>
+        <member name="P:ControleGastos.Api.Models.Transacao.Valor">
+            <summary>Valor monetário sempre positivo. O tipo define se é entrada ou saída.</summary>
+        </member>
+        <member name="P:ControleGastos.Api.Models.Transacao.Tipo">
+            <summary>Tipo da transação: Despesa (0) ou Receita (1).</summary>
+        </member>
+        <member name="P:ControleGastos.Api.Models.Transacao.PessoaId">
+            <summary>FK para a pessoa vinculada.</summary>
+        </member>
+        <member name="P:ControleGastos.Api.Models.Transacao.Pessoa">
+            <summary>Pessoa vinculada à transação.</summary>
+        </member>
+        <member name="T:ControleGastos.Api.Services.Interfaces.IPessoaService">
+            <summary>
+            Serviço de gerenciamento de pessoas.
+            </summary>
+        </member>
+        <member name="M:ControleGastos.Api.Services.Interfaces.IPessoaService.ListarAsync">
+            <summary>Lista todas as pessoas ordenadas por nome.</summary>
+        </member>
+        <member name="M:ControleGastos.Api.Services.Interfaces.IPessoaService.CriarAsync(ControleGastos.Api.DTOs.CriarPessoaDto)">
+            <summary>Cria uma nova pessoa com Id gerado automaticamente.</summary>
+        </member>
+        <member name="M:ControleGastos.Api.Services.Interfaces.IPessoaService.ExcluirAsync(System.Guid)">
+            <summary>
+            Exclui pessoa e todas as transações vinculadas (via ON DELETE CASCADE no banco de dados).
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Services.Interfaces.ITotaisService">
+            <summary>
+            Serviço de consulta de totais.
+            </summary>
+        </member>
+        <member name="M:ControleGastos.Api.Services.Interfaces.ITotaisService.ConsultarAsync">
+            <summary>
+            Calcula totais por pessoa e gerais.
+             Saldo = TotalReceitas - TotalDespesas.
+             Pessoas sem transações aparecem com zeros.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Services.Interfaces.ITransacaoService">
+            <summary>
+            Serviço de gerenciamento de transações.
+            </summary>
+        </member>
+        <member name="M:ControleGastos.Api.Services.Interfaces.ITransacaoService.ListarAsync">
+            <summary>Lista todas as transações ordenadas por descrição, incluindo nome da pessoa.</summary>
+        </member>
+        <member name="M:ControleGastos.Api.Services.Interfaces.ITransacaoService.CriarAsync(ControleGastos.Api.DTOs.CriarTransacaoDto)">
+            <summary>
+            Cria uma nova transação.
+             Pessoa deve existir.
+             Menor de 18 anos só pode registrar despesas.
+             Valor sempre positivo.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Services.PessoaService">
+            <summary>
+            Serviço de gerenciamento de pessoas.
+            Implementa criação com Id automático, listagem ordenada por Nome
+            e exclusão com cascade delete.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Services.TotaisService">
+            <summary>
+            Serviço de consulta de totais.
+             Saldo = TotalReceitas - TotalDespesas para cada pessoa.
+             Pessoas sem transações aparecem com zeros.
+            Totais gerais são a soma dos totais de todas as pessoas.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Services.TransacaoService">
+            <summary>
+            Serviço de gerenciamento de transações.
+            Implementa pessoa deve existir, menor de 18 só despesa
+            e valor sempre positivo.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Validators.CriarPessoaValidator">
+            <summary>
+            Validação estrutural do DTO de criação de pessoa.
+            </summary>
+        </member>
+        <member name="T:ControleGastos.Api.Validators.CriarTransacaoValidator">
+            <summary>
+            Validação estrutural do DTO de criação de transação.
+            </summary>
+        </member>
+        <member name="T:Program">
+            <summary>
+            Auto-generated public partial Program class for top-level statement apps.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type)">
+            <summary>
+            Generates a documentation comment ID for a type.
+            Example: T:Namespace.Outer+Inner`1 becomes T:Namespace.Outer.Inner`1
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.PropertyInfo)">
+            <summary>
+            Generates a documentation comment ID for a property.
+            Example: P:Namespace.ContainingType.PropertyName or for an indexer P:Namespace.ContainingType.Item(System.Int32)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type,System.String)">
+            <summary>
+            Generates a documentation comment ID for a property given its container type and property name.
+            Example: P:Namespace.ContainingType.PropertyName
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.MethodInfo)">
+            <summary>
+            Generates a documentation comment ID for a method (or constructor).
+            For example:
+              M:Namespace.ContainingType.MethodName(ParamType1,ParamType2)~ReturnType
+              M:Namespace.ContainingType.#ctor(ParamType)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.GetTypeDocId(System.Type,System.Boolean,System.Boolean)">
+            <summary>
+            Generates a documentation ID string for a type.
+            This method handles nested types (replacing '+' with '.'),
+            generic types, arrays, pointers, by-ref types, and generic parameters.
+            The <paramref name="includeGenericArguments"/> flag controls whether
+            constructed generic type arguments are emitted, while <paramref name="omitGenericArity"/>
+            controls whether the generic arity marker (e.g. "`1") is appended.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.NormalizeDocId(System.String)">
+            <summary>
+            Normalizes a documentation comment ID to match the compiler-style format.
+            Strips the return type suffix for ordinary methods but retains it for conversion operators.
+            </summary>
+            <param name="docId">The documentation comment ID to normalize.</param>
+            <returns>The normalized documentation comment ID.</returns>
+        </member>
+    </members>
+</doc>
