@@ -3,9 +3,7 @@ using ControleGastos.Api.DTOs;
 
 namespace ControleGastos.Api.Validators;
 
-/// <summary>
 /// Validação estrutural do DTO de criação de transação.
-/// </summary>
 public class CriarTransacaoValidator : AbstractValidator<CriarTransacaoDto>
 {
     public CriarTransacaoValidator()

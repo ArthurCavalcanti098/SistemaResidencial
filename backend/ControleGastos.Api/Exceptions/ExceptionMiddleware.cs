@@ -2,10 +2,8 @@ using System.Text.Json;
 
 namespace ControleGastos.Api.Exceptions;
 
-/// <summary>
 /// Middleware que intercepta exceções de domínio e as mapeia para respostas HTTP padronizadas.
 /// BusinessException → 400, NotFoundException → 404, demais → 500.
-/// </summary>
 public class ExceptionMiddleware
 {
     private readonly RequestDelegate _next;

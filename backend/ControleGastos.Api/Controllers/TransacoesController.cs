@@ -4,9 +4,7 @@ using ControleGastos.Api.Services.Interfaces;
 
 namespace ControleGastos.Api.Controllers;
 
-/// <summary>
 /// Controller para gerenciamento de transações financeiras.
-/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 public class TransacoesController : ControllerBase
@@ -18,9 +16,8 @@ public class TransacoesController : ControllerBase
         _service = service;
     }
 
-    /// <summary>
+    
     /// Lista todas as transações, ordenadas por descrição, incluindo nome da pessoa.
-    /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(List<TransacaoResponseDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<List<TransacaoResponseDto>>> Listar()
@@ -29,12 +26,11 @@ public class TransacoesController : ControllerBase
         return Ok(transacoes);
     }
 
-    /// <summary>
+    
     /// Cria uma nova transação.
     ///  Pessoa deve existir.
-    ///  Menor de 18 anos só pode registrar despesas.
+    ///  Menor de 18 anos só registra despesas.
     ///  Valor deve ser maior que zero.
-    /// </summary>
     [HttpPost]
     [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

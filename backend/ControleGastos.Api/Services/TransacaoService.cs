@@ -7,11 +7,9 @@ using ControleGastos.Api.Services.Interfaces;
 
 namespace ControleGastos.Api.Services;
 
-/// <summary>
 /// Serviço de gerenciamento de transações.
-/// Implementa pessoa deve existir, menor de 18 só despesa
+/// Implementa pessoa deve existir, menor de 18 só registra despesas
 /// e valor sempre positivo.
-/// </summary>
 public class TransacaoService : ITransacaoService
 {
     private readonly AppDbContext _context;

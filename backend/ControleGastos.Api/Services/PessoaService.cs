@@ -7,11 +7,9 @@ using ControleGastos.Api.Services.Interfaces;
 
 namespace ControleGastos.Api.Services;
 
-/// <summary>
 /// Serviço de gerenciamento de pessoas.
 /// Implementa criação com Id automático, listagem ordenada por Nome
 /// e exclusão com cascade delete.
-/// </summary>
 public class PessoaService : IPessoaService
 {
     private readonly AppDbContext _context;

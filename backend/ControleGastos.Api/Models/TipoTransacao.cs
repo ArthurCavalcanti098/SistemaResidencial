@@ -1,12 +1,10 @@
 namespace ControleGastos.Api.Models;
 
-/// <summary>
 /// Classifica uma transação financeira como entrada (receita) ou saída (despesa).
-/// </summary>
 public enum TipoTransacao
 {
-    /// <summary>Saída de valor</summary>
+    /// Saída de valor (despesa)
     Despesa = 0,
-    /// <summary>Entrada de valor</summary>
+    /// Entrada de valor (receita)
     Receita = 1
 }

@@ -2,7 +2,7 @@ using ControleGastos.Api.Models;
 
 namespace ControleGastos.Api.DTOs;
 
-/// <summary>DTO para criação de transação. Id não é enviado pelo cliente.</summary>
+/// DTO para criação de transação. O Id não é enviado pelo cliente.
 public class CriarTransacaoDto
 {
     public string Descricao { get; set; } = string.Empty;
@@ -11,7 +11,7 @@ public class CriarTransacaoDto
     public Guid PessoaId { get; set; }
 }
 
-/// <summary>DTO de resposta para transação criada/listada. Inclui nome da pessoa.</summary>
+/// DTO de resposta para transação criada/listada. Incluindo o nome da pessoa.
 public class TransacaoResponseDto
 {
     public Guid Id { get; set; }

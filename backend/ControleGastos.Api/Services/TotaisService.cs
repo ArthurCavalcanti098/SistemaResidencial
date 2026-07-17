@@ -6,12 +6,10 @@ using ControleGastos.Api.Services.Interfaces;
 
 namespace ControleGastos.Api.Services;
 
-/// <summary>
 /// Serviço de consulta de totais.
 ///  Saldo = TotalReceitas - TotalDespesas para cada pessoa.
 ///  Pessoas sem transações aparecem com zeros.
 /// Totais gerais são a soma dos totais de todas as pessoas.
-/// </summary>
 public class TotaisService : ITotaisService
 {
     private readonly AppDbContext _context;

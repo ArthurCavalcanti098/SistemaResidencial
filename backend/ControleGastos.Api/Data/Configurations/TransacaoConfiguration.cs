@@ -4,11 +4,9 @@ using ControleGastos.Api.Models;
 
 namespace ControleGastos.Api.Data.Configurations;
 
-/// <summary>
 /// Configuração da entidade Transacao para o EF Core.
 /// Tabela: transacoes, schema: public.
 /// Constraints: PK UUID, Valor > 0 CHECK, FK PessoaId ON DELETE CASCADE, índice em PessoaId.
-/// </summary>
 public class TransacaoConfiguration : IEntityTypeConfiguration<Transacao>
 {
     public void Configure(EntityTypeBuilder<Transacao> builder)

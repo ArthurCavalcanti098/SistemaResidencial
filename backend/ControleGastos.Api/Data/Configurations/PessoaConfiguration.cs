@@ -4,11 +4,9 @@ using ControleGastos.Api.Models;
 
 namespace ControleGastos.Api.Data.Configurations;
 
-/// <summary>
 /// Configuração da entidade Pessoa para o EF Core.
 /// Tabela: pessoas, schema: public.
 /// Constraints: PK UUID, Nome NOT NULL e CHECK length > 0, Idade CHECK 0-150.
-/// </summary>
 public class PessoaConfiguration : IEntityTypeConfiguration<Pessoa>
 {
     public void Configure(EntityTypeBuilder<Pessoa> builder)
