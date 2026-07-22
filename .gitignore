@@ -24,6 +24,4 @@ frontend/dist/
 # OS
 .DS_Store
 Thumbs.db
-# Documentação interna (não deve ser pública)
-docs/
-.planning/
+
